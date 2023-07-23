@@ -1,0 +1,443 @@
+problem1:cummulative multiplication
+code:
+import java.util.Arrays;
+
+public class CumulativeMultiple {
+    public static void main(String[] args) {
+        int[] arrNum = {5, 3, 4, 2, 0, 8};
+        
+        try {
+            calculateCumulativeMultiple(arrNum);
+            System.out.println("Output- arrNum = " + Arrays.toString(arrNum));
+        } catch (ArithmeticException e) {
+            System.out.println("Error: " + e.getMessage());
+        }
+    }
+    
+    public static void calculateCumulativeMultiple(int[] arr) throws ArithmeticException {
+        if (arr == null || arr.length == 0) {
+            throw new ArithmeticException("Array cannot be null or empty.");
+        }
+        
+        int cumulativeMultiple = 1;
+        for (int i = 0; i < arr.length; i++) {
+            if (arr[i] == 0) {
+                cumulativeMultiple = 0; 
+                break;
+            }
+            
+            cumulativeMultiple *= arr[i];
+            arr[i] = cumulativeMultiple;
+        }
+    }
+}
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+problem2:missing number in an array
+Code:
+import java.util.ArrayList;
+import java.util.List;
+
+public class MissingNumbersFinder {
+
+    public static List<Integer> findMissingNumbers(int[] arrNum) {
+        List<Integer> missingNumbers = new ArrayList<>();
+
+        int n = arrNum.length;
+        int expectedNum = arrNum[0];
+
+        for (int i = 0; i < n; i++) {
+            while (arrNum[i] != expectedNum) {
+                missingNumbers.add(expectedNum);
+                expectedNum++;
+            }
+            expectedNum++;
+        }
+
+        return missingNumbers;
+    }
+
+    public static void main(String[] args) {
+        int[] arrNum1 = {1, 2, 4, 5, 6};
+        int[] arrNum2 = {1, 2, 3, 5, 6, 8, 10, 11, 14};
+
+        List<Integer> missingNumbers1 = findMissingNumbers(arrNum1);
+        List<Integer> missingNumbers2 = findMissingNumbers(arrNum2);
+
+        System.out.println("Missing numbers in arrNum1: " + missingNumbers1);
+        System.out.println("Missing numbers in arrNum2: " + missingNumbers2);
+}
+}
+
+--------------------------------------------------------------------------------------------------------------------------------------------------
+
+problem3:count of singulars in an array.
+Code:
+import java.util.HashMap;
+import java.util.Map;
+
+public class SingularCounter {
+
+    public static int countSingularSocks(int[] arrNum) {
+        Map<Integer, Integer> sockPairs = new HashMap<>();
+
+        
+        for (int sockId : arrNum) {
+            sockPairs.put(sockId, sockPairs.getOrDefault(sockId, 0) + 1);
+        }
+
+        int singularCount = 0;
+        
+        
+        for (int count : sockPairs.values()) {
+            if (count % 2 != 0) {
+                singularCount++;
+            }
+        }
+
+        return singularCount;
+    }
+
+    public static void main(String[] args) {
+        int[] arrNum = {10, 20, 20, 1610, 30, 50, 10, 20};
+
+        int scount = countSingularSocks(arrNum);
+        System.out.println("Total number of singular socks left: " + scount);
+    }
+}
+
+----------------------------------------------------------------------------------------------------------------------------------------
+problem4:java subarray
+Code:
+import java.io.*;
+import java.util.*;
+import java.text.*;
+import java.math.*;
+import java.util.regex.*;
+
+public class Solution {
+
+    public static void main(String[] args) {
+        /* Enter your code here. Read input from STDIN. Print output to STDOUT. Your class should be named Solution. */
+        Scanner sc= new Scanner(System.in);
+        
+        int n = sc.nextInt();
+        int[] arr = new int[n];
+        for(int i = 0;i<n;i++){
+            arr[i] = sc.nextInt();
+        }
+        sc.close();
+        int count = 0;
+        for(int i = 0;i<n;i++){
+            int total = arr[i];
+            if (total < 0){
+                count += 1;
+            }
+            for(int j = i+1;j<n;j++){
+                total += arr[j];
+                if (total< 0){
+                    count += 1;
+                }
+            }
+        }
+        System.out.println(count);
+    }
+}
+
+-----------------------------------------------------------------------------------------------------------------------------------
+problem5:merge and sort the elements in two linkedked list.
+code:
+class ListNode {
+    int value;
+    ListNode next;
+
+    ListNode(int value) {
+        this.value = value;
+    }
+}
+
+public class MergeAndSortLinkedList {
+
+    public static ListNode mergeTwoLists(ListNode l1, ListNode l2) {
+        ListNode dummy = new ListNode(-1);
+        ListNode current = dummy;
+
+        while (l1 != null && l2 != null) {
+            if (l1.value <= l2.value) {
+                current.next = l1;
+                l1 = l1.next;
+            } else {
+                current.next = l2;
+                l2 = l2.next;
+            }
+            current = current.next;
+        }
+
+        
+        current.next = (l1 != null) ? l1 : l2;
+
+        return dummy.next;
+    }
+
+    public static void printLinkedList(ListNode head) {
+        ListNode current = head;
+        while (current != null) {
+            System.out.print(current.value + "->");
+            current = current.next;
+        }
+        System.out.println("null");
+    }
+
+    public static void main(String[] args) {
+      
+        ListNode node1 = new ListNode(25);
+        ListNode node2 = new ListNode(35);
+        ListNode node3 = new ListNode(12);
+        ListNode node4 = new ListNode(4);
+        ListNode node5 = new ListNode(36);
+        ListNode node6 = new ListNode(48);
+
+        node1.next = node2;
+        node2.next = node3;
+        node3.next = node4;
+        node4.next = node5;
+        node5.next = node6;
+
+        
+        ListNode node7 = new ListNode(8);
+        ListNode node8 = new ListNode(32);
+        ListNode node9 = new ListNode(22);
+        ListNode node10 = new ListNode(45);
+        ListNode node11 = new ListNode(63);
+        ListNode node12 = new ListNode(49);
+
+        node7.next = node8;
+        node8.next = node9;
+        node9.next = node10;
+        node10.next = node11;
+        node11.next = node12;
+
+        
+        ListNode mergedList = mergeTwoLists(node1, node7);
+
+        // Print the output linked list
+        System.out.println("Output:");
+        printLinkedList(mergedList);
+}
+}
+
+------------------------------------------------------------------------------------------------------------------------------------------------
+
+problem6:Remove duplicates from linked list
+Code:
+class LinkedList {
+ 
+    static Node head;
+ 
+    static class Node {
+ 
+        int data;
+        Node next;
+ 
+        Node(int d)
+        {
+            data = d;
+            next = null;
+        }
+    }
+ 
+    
+    void remove_duplicates()
+    {
+        Node ptr1 = null, 
+        ptr2 = null, 
+        dup = null;
+        ptr1 = head;
+ 
+        
+        while (ptr1 != null && ptr1.next != null) {
+            ptr2 = ptr1;
+ 
+            
+            while (ptr2.next != null) {
+ 
+
+                if (ptr1.data == ptr2.next.data) {
+ 
+                
+                    ptr2.next = ptr2.next.next;
+                    System.gc();
+                }
+                else  {
+                    ptr2 = ptr2.next;
+                }
+            }
+            ptr1 = ptr1.next;
+        }
+    }
+ 
+    void printList(Node node)
+    {
+        while (node != null) {
+            System.out.print(node.data + " ");
+            node = node.next;
+        }
+    }
+ 
+    public static void main(String[] args)
+    {
+        LinkedList list = new LinkedList();
+        list.head = new Node(10);
+        list.head.next = new Node(12);
+        list.head.next.next = new Node(11);
+        list.head.next.next.next = new Node(11);
+        list.head.next.next.next.next = new Node(12);
+        list.head.next.next.next.next.next = new Node(11);
+        list.head.next.next.next.next.next.next
+            = new Node(10);
+ 
+        System.out.println(
+            "Linked List before removing duplicates : ");
+        list.printList(head);
+ 
+        list.remove_duplicates();
+        System.out.println("\n");
+        System.out.println(
+            "Linked List after removing duplicates : ");
+ list.printList(head);
+
+    }
+}
+
+---------------------------------------------------------------------------------------------------------------------------------------
+problem7:Long polindrome substring
+Code:
+class Solution {
+    public String longestPalindrome(String s) {
+        int[] arr = new int[]{0, 0};
+        
+        for (int i = 0; i < s.length(); i++) {
+            int oddLength = expand(i, i, s);
+            if (oddLength > arr[1] - arr[0] + 1) {
+                int dist = oddLength / 2;
+                arr[0] = i - dist;
+                arr[1] = i + dist;
+            }
+            
+            int evenLength = expand(i, i + 1, s);
+            if (evenLength > arr[1] - arr[0] + 1) {
+                int dist = (evenLength / 2) - 1;
+                arr[0] = i - dist;
+                arr[1] = i + 1 + dist;
+            }
+        }
+
+        int i = arr[0];
+        int j = arr[1];
+        return s.substring(i, j + 1);
+    }
+    
+    private int expand(int i, int j, String s) {
+        int left = i;
+        int right = j;
+        
+        while (left >= 0 && right < s.length() && s.charAt(left) == s.charAt(right)) {
+            left--;
+            right++;
+        }
+
+        return right - left - 1;
+    }
+}
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------
+
+problem8:Java stack
+Code:
+import java.util.*;
+class Solution{
+    
+    public static void main(String []argh)
+    {
+        Scanner sc = new Scanner(System.in);
+        
+        while (sc.hasNext()) {
+            String input = sc.next();
+            Stack<Character> str = new Stack<>();
+            
+            for(int i=0; i<input.length(); i++){
+                if(input.charAt(i)== '{' || input.charAt(i)== '[' || input.charAt(i )== '('){
+                    str.push(input.charAt(i));
+                }
+                else {
+                  if(str.empty()){
+                        str.push(input.charAt(i));
+                        break;
+                    }
+                    char c =str.pop();
+                    if(input.charAt(i)== '{' && c != '}' || input.charAt(i)== '[' && c != ']' || input.charAt(i)== '(' && c != ')'){
+                        break;
+                    }
+                }
+            }
+            if(str.empty()){
+                System.out.println("true");
+            }
+            else{
+                System.out.println("false");
+            }
+        }
+    }
+}
+
+--------------------------------------------------------------------------------------------------------------------
+
+problem9: Java Dequeue
+Code:
+import java.io.IOException;
+import java.util.*;
+
+public class Dequeue {
+    public static void main(String[] args) throws IOException {
+        Scanner in = new Scanner(System.in);
+        Deque deque = new ArrayDeque<>();
+        int n = in.nextInt();
+        int m = in.nextInt();
+
+        for (int i = 0; i < n; i++) {
+            int num = in.nextInt();
+            deque.add(num);
+        }
+        int maxUniqueNumbers = 0;
+        List<Integer> summary = new ArrayList<>();
+        ArrayList<Integer> array = new ArrayList<>(deque);
+        for (int k = 0; k <= n-m; k++) {
+            List<Integer> list = array.subList(k, k+m);
+             deque = new ArrayDeque(list);
+            // System.out.println(deque);
+            while (deque.size() > 1){
+                int counter = m;
+
+                    int first = (int) deque.pollFirst();
+                    int last = (int) deque.pollLast();
+
+                    if (first == last) {
+                        counter--;
+                    }
+                    summary.add(counter);
+                    
+                for (int s = 0; s < summary.size()-1; s++) {
+                    int findMax = summary.get(s);
+                    if (findMax > summary.get(s+1)){
+                        maxUniqueNumbers = findMax;
+                    }
+                }
+            }
+        }
+        System.out.println(maxUniqueNumbers);
+    }
+}
+
+----------------------------------------------------------------------------------------------------
+
+
